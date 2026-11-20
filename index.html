@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#14110e">
+<title>FoogerBox Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Michroma&family=Barlow:wght@400;500;600&family=Barlow+Semi+Condensed:wght@500;600&display=swap" rel="stylesheet">
+<style>
+/* VOICE everyday: the owner's guide that ships with a pedal, used like a small app
+   IDEA a 1970s Moog effects module: black front panel, walnut end cheeks, cream silkscreen, red LED
+   PICTURE the Hothouse drawn in cream line work; each preset is the panel with its knobs set
+   COLOUR panel black, cream ink, walnut, LED red; amber / teal / lilac tag the filter, phaser and ring mod
+   TYPE Michroma for titles (synth-panel extended), Barlow for text, Barlow Semi Condensed for legends
+   LAYOUT one view at a time (overview, three effects, tips) chosen from a bottom tab bar; print shows them all */
+:root{color-scheme:dark;--bg:#14110e;--bar:#0e0c0a;--card:#1c1814;--edge:#3a3129;--ink:#efe4cc;--dim:#a3967f;--led:#ff4a2e;--wood:#5b351f;--wood2:#7d4a2a;--filter:#f3a541;--phaser:#5cc8ab;--ring:#b9a2ff;--cheek:clamp(8px,2vw,26px);--barh:64px}
+:root[data-theme=light],:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+html{scroll-padding-top:16px}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.55 Barlow,"Helvetica Neue",Arial,sans-serif;overflow-x:clip;padding-bottom:calc(var(--barh) + env(safe-area-inset-bottom,0px))}
+a{color:var(--ink)}
+.cheek{position:fixed;top:0;bottom:0;width:var(--cheek);z-index:3;background:repeating-linear-gradient(90deg,rgba(0,0,0,.16) 0 1px,transparent 1px 4px,rgba(255,220,180,.05) 4px 5px,transparent 5px 9px),linear-gradient(90deg,var(--wood),var(--wood2) 45%,var(--wood))}
+.cheek.l{left:0;box-shadow:inset -2px 0 0 rgba(0,0,0,.45)}
+.cheek.r{right:0;box-shadow:inset 2px 0 0 rgba(0,0,0,.45)}
+.view{display:none;padding-block:clamp(28px,4vw,56px);padding-inline:calc(var(--cheek) + max(4vw,16px,env(safe-area-inset-left,0px)))}
+.view.on{display:block}
+.wrap{max-width:1240px;margin:0 auto}
+h1,h2{font-family:Michroma,"Eurostile","Arial Black",sans-serif;font-weight:400;line-height:1.1;letter-spacing:-.01em;text-wrap:balance;margin:0}
+h1{font-size:clamp(30px,6.4vw,54px)}
+h2{font-size:clamp(26px,4vw,40px)}
+h3{font:600 21px/1.2 Barlow,sans-serif;margin:0}
+p{margin:0 0 12px;max-width:68ch}
+.muted{color:var(--dim)}
+.intro{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(20px,4vw,64px);align-items:start}
+.lede{font-size:21px;line-height:1.45;margin-top:18px}
+.links{display:flex;flex-wrap:wrap;gap:10px;margin-top:6px}
+.links a{display:inline-flex;align-items:center;min-height:44px;padding:0 16px;border:1.5px solid var(--edge);border-radius:999px;text-decoration:none;font:600 15px "Barlow Semi Condensed",sans-serif}
+.links a:hover,.links a:focus-visible{border-color:var(--ink)}
+ol.qs{list-style:none;counter-reset:q;padding:0;margin:10px 0 0}
+ol.qs li{counter-increment:q;position:relative;padding:8px 0 8px 44px;border-top:1px solid var(--edge)}
+ol.qs li::before{content:counter(q);position:absolute;left:0;top:8px;width:28px;height:28px;border:1.5px solid var(--ink);border-radius:50%;display:grid;place-items:center;font:600 14px Barlow,sans-serif}
+.overview{display:grid;grid-template-columns:auto minmax(0,420px);justify-content:center;gap:clamp(24px,5vw,72px);align-items:center;margin-top:clamp(28px,4vw,48px)}
+.pedal svg{display:block;height:min(620px,78vh);width:auto;max-width:100%}
+.legend{margin:0}
+.legend div{display:grid;grid-template-columns:30px minmax(0,1fr);gap:12px;align-items:baseline;padding:8px 0;border-top:1px solid var(--edge)}
+.legend dt{width:26px;height:26px;border-radius:50%;background:var(--led);color:#fff;display:grid;place-items:center;font:600 14px Barlow,sans-serif;align-self:start}
+.legend dd{margin:0;font-size:16px;color:var(--dim)}
+.legend dd b{color:var(--ink);font-weight:600;margin-right:6px}
+.fxhead{display:grid;grid-template-columns:minmax(0,1fr) minmax(260px,330px);gap:clamp(24px,4vw,64px);align-items:center}
+.fxhead .sub{font:500 18px "Barlow Semi Condensed",sans-serif;color:var(--dim);margin:8px 0 0}
+.blurb{font-size:20px;line-height:1.45;margin:14px 0 18px}
+.chip{display:inline-flex;align-items:center;gap:8px;font:600 15px "Barlow Semi Condensed",sans-serif;padding:3px 12px 3px 7px;border-radius:999px;border:1.5px solid currentColor;white-space:nowrap}
+.chip svg{width:14px;height:22px}
+.facts{display:grid;gap:8px;margin:0}
+.facts div{display:grid;grid-template-columns:7.5em minmax(0,1fr);gap:12px;padding-top:8px;border-top:1px solid var(--edge)}
+.facts dt{font:600 15px "Barlow Semi Condensed",sans-serif;color:var(--dim)}
+.facts dd{margin:0;font-size:16px}
+.face svg,.card svg{display:block;width:100%;height:auto}
+.ctl{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 clamp(24px,4vw,56px);margin:28px 0 0}
+.ctl div{padding:12px 0;border-top:1px solid var(--edge)}
+.ctl h4{font:600 17px "Barlow Semi Condensed",sans-serif;margin:0 0 2px;color:var(--dim)}
+.ctl h4 b{color:var(--ink);font-weight:600;margin-left:4px}
+.ctl p{font-size:16px;margin:0}
+.pre{margin-top:40px}
+.pre h3{margin-bottom:14px}
+.cards{display:grid;gap:18px;grid-template-columns:repeat(2,minmax(0,1fr))}
+.card{background:var(--card);border:1px solid var(--edge);border-radius:14px;padding:16px 14px 14px;display:flex;flex-direction:column;gap:8px;break-inside:avoid}
+.card h4{font:600 20px/1.15 Barlow,sans-serif;margin:0}
+.card .for{font:500 14px "Barlow Semi Condensed",sans-serif;color:var(--dim)}
+.card p{font-size:16px;margin:0}
+.card .tip{font-size:15px;color:var(--dim);border-top:1px solid var(--edge);padding-top:8px;margin-top:auto}
+.gk{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 clamp(24px,4vw,56px);margin-top:18px}
+.gk div{padding:16px 0;border-top:1px solid var(--edge)}
+.gk h4{font:600 23px/1.2 "Barlow Semi Condensed",sans-serif;margin:0 0 4px}
+.gk p{font-size:15.5px;color:var(--dim);margin:0}
+.about{margin-top:40px;padding-top:16px;border-top:1px solid var(--edge);color:var(--dim);font-size:14px}
+.about p{max-width:90ch}
+.next{margin-top:36px;display:flex;justify-content:flex-end}
+.next a{display:inline-flex;align-items:center;gap:10px;min-height:44px;padding:0 18px;border-radius:999px;background:var(--card);border:1px solid var(--edge);text-decoration:none;font:600 16px "Barlow Semi Condensed",sans-serif}
+.tabbar{position:fixed;left:0;right:0;bottom:0;z-index:4;background:var(--bar);border-top:1px solid var(--edge);padding:0 calc(var(--cheek) + 4px) env(safe-area-inset-bottom,0px)}
+.tabbar nav{max-width:720px;margin:0 auto;display:grid;grid-auto-flow:column;grid-auto-columns:minmax(0,1fr)}
+.tabbar a{height:var(--barh);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;color:var(--dim);text-decoration:none;font:600 13px "Barlow Semi Condensed",sans-serif;border-top:2px solid transparent;transition:color .15s,border-color .15s}
+.tabbar a svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.tabbar a:hover{color:var(--ink)}
+.tabbar a:focus-visible{outline:2px solid var(--ink);outline-offset:-4px}
+.tabbar a[aria-current=page]{color:var(--c,var(--ink));border-top-color:var(--c,var(--led))}
+svg .ln{stroke:var(--ink);fill:none;stroke-width:2}
+svg .fs{stroke:var(--ink);fill:none;stroke-width:2.5}
+svg .dm{stroke:var(--dim);fill:none;stroke-width:1.3}
+svg .kb{fill:#221d18;stroke:var(--ink);stroke-width:2}
+svg .pt{stroke:var(--ink);stroke-width:3.5;stroke-linecap:round}
+svg .pt.idle{stroke:var(--dim)}
+svg .ball{fill:var(--ink)}
+svg .ball.idle{fill:var(--dim)}
+svg .lb{font:600 14px "Barlow Semi Condensed",sans-serif;fill:var(--ink);letter-spacing:.03em}
+svg .sm{font:500 13px "Barlow Semi Condensed",sans-serif;fill:var(--dim);letter-spacing:.03em}
+svg .vl{font:600 14px "Barlow Semi Condensed",sans-serif}
+svg .bd{fill:var(--led)}
+svg .bt{font:600 13px Barlow,sans-serif;fill:#fff}
+svg .led{fill:var(--led)}
+svg .glow{fill:var(--led);opacity:.25}
+@media(min-width:1100px){.cards.n6{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(min-width:1240px){.cards.n4{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media(max-width:860px){.intro{grid-template-columns:minmax(0,1fr)}.overview{grid-template-columns:minmax(0,auto) minmax(0,1fr)}.pedal svg{height:min(540px,76vh)}}
+@media(max-width:640px){.overview{grid-template-columns:minmax(0,1fr);justify-items:center}.legend{width:100%}.pedal svg{height:auto;width:min(100%,300px)}.fxhead{grid-template-columns:minmax(0,1fr)}.fxhead .face{max-width:330px}.ctl,.gk,.cards{grid-template-columns:minmax(0,1fr)}.lede,.blurb{font-size:18px}.tabbar a{font-size:12px}}
+@media(prefers-reduced-motion:reduce){.tabbar a{transition:none}}
+@page{size:A4;margin:0}
+@media print{*{-webkit-print-color-adjust:exact;print-color-adjust:exact}body{padding:0;font-size:11pt}.tabbar,.next,.links{display:none}.view{display:block;padding:12mm 16mm 0;break-after:page}h1{font-size:44px}.cards{gap:12px}.card{gap:5px;padding:12px 12px 10px}.card h4{font-size:18px}.card p{font-size:14px}.card .tip{font-size:13px}.view:last-of-type{break-after:auto}.intro{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10mm}.lede{font-size:17px}.overview{grid-template-columns:auto minmax(0,1fr);margin-top:6mm;gap:10mm}.pedal svg{height:118mm}.cards.n6{grid-template-columns:repeat(3,minmax(0,1fr))}.cards.n4{grid-template-columns:repeat(2,minmax(0,1fr))}.cards.n4 .card svg{max-width:62mm;margin:0 auto}.card,.fxhead,.ctl div,.gk div{break-inside:avoid}.pre{break-before:page}}
+</style>
+</head>
+<body>
+<div class="cheek l" aria-hidden="true"></div><div class="cheek r" aria-hidden="true"></div>
+
+<main>
+  <section class="view" id="overview" data-c="var(--led)">
+    <div class="wrap">
+      <div class="intro">
+        <div>
+          <h1>FoogerBox</h1>
+          <p class="lede" id="lede"></p>
+          <div class="links"><a href="FoogerBox-Guide.pdf">Download as PDF</a></div>
+        </div>
+        <div>
+          <h3>In two minutes</h3>
+          <ol class="qs" id="steps"></ol>
+        </div>
+      </div>
+      <div class="overview">
+        <div class="pedal" id="hero-pedal" role="img" aria-label="Line drawing of the pedal with lettered parts"></div>
+        <dl class="legend" id="legend"></dl>
+      </div>
+      <div class="next"><a href="#filter">Next: Filter &rarr;</a></div>
+    </div>
+  </section>
+
+  <div id="effect-views"></div>
+
+  <section class="view" id="tips" data-c="var(--ink)">
+    <div class="wrap">
+      <h2>Good to know</h2>
+      <div class="gk" id="tips-list"></div>
+      <div class="about"><p id="about"></p></div>
+    </div>
+  </section>
+</main>
+
+<div class="tabbar">
+  <nav aria-label="Guide sections" id="tabs"></nav>
+</div>
+
+<script src="guide.js"></script>
+<script>
+{
+const {EDITION, SHOWN, FX, PRESETS, TEXT, COL, face} = window.FoogerBox;
+const $ = id => document.getElementById(id);
+$("lede").innerHTML = TEXT.lede.replace(/\ba (filter|phaser|ring modulator)\b/g, "a <b>$1</b>");
+$("steps").innerHTML = TEXT.steps.map(t => `<li>${t}</li>`).join("");
+$("legend").innerHTML = TEXT.legend.map(([l, b, t]) => `<div><dt>${l}</dt><dd><b>${b}</b>${t}</dd></div>`).join("");
+$("tips-list").innerHTML = TEXT.tips.map(([h, t]) => `<div><h4>${h}</h4><p>${t}</p></div>`).join("");
+$("about").textContent = TEXT.about;
+const ORDER = ["overview", ...SHOWN, "tips"];
+const ICON = {
+  overview: '<rect x="5" y="2.5" width="14" height="19" rx="2.5"/><circle cx="9" cy="7.5" r="1.6"/><circle cx="15" cy="7.5" r="1.6"/><circle cx="9" cy="17" r="2"/><circle cx="15" cy="17" r="2"/>',
+  filter: '<path d="M2 9h9c3 0 4-3 5.5-3S18 13 22 20"/>',
+  phaser: '<path d="M2 12c2.5-7 5-7 7.5 0s5 7 7.5 0 3-5 5-5"/>',
+  ring: '<circle cx="9" cy="12" r="6"/><circle cx="15" cy="12" r="6"/>',
+  tips: '<path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3z"/>'};
+const NAMES = {overview: "Overview", filter: "Filter", phaser: "Phaser", ring: "Ring mod", tips: "Tips"};
+const chip = fx => `<span class="chip" style="color:${COL[fx]}"><svg viewBox="0 0 14 22"><rect x="2" y="1" width="10" height="20" rx="5" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="7" cy="${[5, 11, 17][FX[fx].t1]}" r="3.5" fill="currentColor"/></svg>Switch 1 ${["up", "middle", "down"][FX[fx].t1]}</span>`;
+const card = p => `<article class="card"><h4>${p.name}</h4><span class="for">${p.for}</span><p>${p.text}</p>
+  <div role="img" aria-label="Panel settings for ${p.name}">${face(p.fx, p, false)}</div><p class="tip">${p.tip}</p></article>`;
+
+$("tabs").innerHTML = ORDER.map(v => `<a href="#${v}" data-v="${v}"${COL[v] ? ` style="--c:${COL[v]}"` : ""}><svg viewBox="0 0 24 24">${ICON[v]}</svg>${NAMES[v]}</a>`).join("");
+document.getElementById("hero-pedal").innerHTML = face(null, null, true);
+$("effect-views").outerHTML = SHOWN.map(fx => `<section class="view" id="${fx}"></section>`).join("");
+for (const fx of SHOWN) {
+  const F = FX[fx], list = PRESETS.filter(p => p.fx === fx), nxt = ORDER[ORDER.indexOf(fx) + 1];
+  document.getElementById(fx).innerHTML = `<div class="wrap">
+    <div class="fxhead"><div>
+      <h2>${F.name}</h2>
+      <p class="sub">${F.sub}${EDITION === "full" ? " &nbsp; " + chip(fx) : ""}</p>
+      <p class="blurb">${F.blurb}</p>
+      <dl class="facts"><div><dt>Tap tempo</dt><dd>${F.tap}</dd></div><div><dt>Right LED</dt><dd>${F.led}</dd></div></dl>
+    </div><div class="face" role="img" aria-label="${F.name} controls">${face(fx, null, false)}</div></div>
+    <div class="ctl">${F.ctl.map(c => `<div><h4>${c[0]}<b>${c[1]}</b></h4><p>${c[2]}</p></div>`).join("")}</div>
+    <div class="pre"><h3>${F.name} presets</h3><div class="cards n${list.length}">${list.map(card).join("")}</div></div>
+    <div class="next"><a href="#${nxt}">Next: ${NAMES[nxt]} &rarr;</a></div>
+  </div>`;
+}
+
+const tabs = [...document.querySelectorAll(".tabbar a")];
+function show() {
+  const id = ORDER.includes(location.hash.slice(1)) ? location.hash.slice(1) : "overview";
+  for (const v of document.querySelectorAll(".view")) v.classList.toggle("on", v.id === id);
+  for (const t of tabs) t.toggleAttribute("aria-current", t.dataset.v === id), t.dataset.v === id && t.setAttribute("aria-current", "page");
+  document.title = id === "overview" ? "FoogerBox Guide" : NAMES[id] + " – FoogerBox Guide";
+  window.scrollTo(0, 0);
+}
+window.addEventListener("hashchange", show);
+show();
+}
+</script>
+</body>
+</html>
