@@ -35,7 +35,7 @@ const cell = p => `<td valign="top" width="50%"><b>${p.name}</b><br><sub>${p.for
   `<img src="img/presets/${p.id}.svg" width="300" alt="${p.name}: panel settings"><br><sub>${p.tip}</sub></td>`;
 const pairs = list => list.reduce((rows, p, i) => (i % 2 ? rows[rows.length - 1].push(p) : rows.push([p]), rows), []);
 const md = [];
-md.push(`# FoogerBox`, ``,
+md.push(`<img src="icon.svg" width="88" align="right" alt="">`, ``, `# FoogerBox`, ``,
   TEXT.lede.replace(/\ba (filter|phaser|ring modulator)\b/g, "a **$1**") + ` Built on the Cleveland Music Co. Hothouse.`, ``,
   `**[Open the guide app](${APP})** · [PDF guide](FoogerBox-Guide.pdf)`, ``,
   `## In two minutes`, ``, ...TEXT.steps.map((t, i) => `${i + 1}. ${t}`), ``,

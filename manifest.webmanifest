@@ -1,0 +1,15 @@
+{
+  "name": "FoogerBox Guide",
+  "short_name": "FoogerBox",
+  "description": "User guide for the FoogerBox filter pedal",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#14110e",
+  "theme_color": "#14110e",
+  "icons": [
+    {"src": "icon.svg", "type": "image/svg+xml", "sizes": "any"},
+    {"src": "icon-192.png", "type": "image/png", "sizes": "192x192"},
+    {"src": "icon-512.png", "type": "image/png", "sizes": "512x512"}
+  ]
+}

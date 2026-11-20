@@ -1,3 +1,5 @@
+<img src="icon.svg" width="88" align="right" alt="">
+
 # FoogerBox
 
 A classic Moog-style filter in a pedal: a resonant ladder filter with an envelope that follows your playing. More effects are coming in a later update. Built on the Cleveland Music Co. Hothouse.

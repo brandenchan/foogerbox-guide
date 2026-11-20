@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- FoogerBox icon: a small effects module, black panel between walnut
+       cheeks, one cream-ringed knob turned to about 2 o'clock, a red LED. -->
+  <defs>
+    <clipPath id="tile"><rect width="512" height="512" rx="112"/></clipPath>
+    <linearGradient id="wood" x1="0" x2="1">
+      <stop offset="0" stop-color="#4a2a17"/><stop offset=".45" stop-color="#8a5532"/><stop offset="1" stop-color="#5b351f"/>
+    </linearGradient>
+    <pattern id="grain" width="9" height="512" patternUnits="userSpaceOnUse">
+      <rect x="0" width="1.5" height="512" fill="#000" opacity=".22"/>
+      <rect x="5" width="1" height="512" fill="#ffdcb4" opacity=".08"/>
+    </pattern>
+    <radialGradient id="cap" cx=".4" cy=".35" r=".75">
+      <stop offset="0" stop-color="#3a322b"/><stop offset="1" stop-color="#15120f"/>
+    </radialGradient>
+    <radialGradient id="glow">
+      <stop offset="0" stop-color="#ff4a2e" stop-opacity=".55"/><stop offset="1" stop-color="#ff4a2e" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <g clip-path="url(#tile)">
+    <rect width="512" height="512" fill="#14110e"/>
+    <rect width="78" height="512" fill="url(#wood)"/><rect width="78" height="512" fill="url(#grain)"/>
+    <rect x="434" width="78" height="512" fill="url(#wood)"/><rect x="434" width="78" height="512" fill="url(#grain)"/>
+    <rect x="76" width="4" height="512" fill="#000" opacity=".5"/><rect x="432" width="4" height="512" fill="#000" opacity=".5"/>
+    <!-- LED -->
+    <circle cx="256" cy="98" r="40" fill="url(#glow)"/>
+    <circle cx="256" cy="98" r="17" fill="#ff4a2e"/>
+    <!-- scale ticks, 300 degrees -->
+    <g stroke="#a3967f" stroke-width="8" stroke-linecap="round" transform="translate(256 300)">
+      <line x1="0" y1="-158" x2="0" y2="-140" transform="rotate(-150)"/>
+      <line x1="0" y1="-158" x2="0" y2="-144" transform="rotate(-90)"/>
+      <line x1="0" y1="-158" x2="0" y2="-144" transform="rotate(-30)"/>
+      <line x1="0" y1="-158" x2="0" y2="-140" transform="rotate(0)"/>
+      <line x1="0" y1="-158" x2="0" y2="-144" transform="rotate(30)"/>
+      <line x1="0" y1="-158" x2="0" y2="-144" transform="rotate(90)"/>
+      <line x1="0" y1="-158" x2="0" y2="-140" transform="rotate(150)"/>
+    </g>
+    <!-- knob -->
+    <circle cx="256" cy="300" r="118" fill="url(#cap)" stroke="#efe4cc" stroke-width="16"/>
+    <circle cx="256" cy="300" r="78" fill="none" stroke="#a3967f" stroke-width="5" opacity=".7"/>
+    <line x1="256" y1="262" x2="256" y2="200" stroke="#efe4cc" stroke-width="22" stroke-linecap="round" transform="rotate(60 256 300)"/>
+  </g>
+</svg>
