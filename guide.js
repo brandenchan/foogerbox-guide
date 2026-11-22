@@ -46,20 +46,20 @@
         ["Knob 6", "Output", "Volume, 0 dB at noon. Runs louder than bypass: start around 10 o'clock."],
         ["Switch 2", "LFO range", "Up Lo (slow), middle Hi (fast, up to audio rate), down LFO off (a fixed notch)."],
         ["Switch 3", "Stages", "Up 6 (classic), middle 12 (deeper), down 12 with inverted resonance (hollow)."]]},
-    ring: {name: "Ring mod", sub: "MF-102 style, experimental", t1: 2, short: ["CARRIER", "RANGE", "LFO RATE", "LFO DEPTH", "MIX", "OUTPUT"],
-      t: [["UNUSED", ["", "", ""]], ["LFO SHAPE", ["SINE", "TRIANGLE", "SQUARE"]]],
-      fmt: [(k, p) => hz(2 ** ringOct(k, p.k[1])[2]), k => { const r = ringOct(0, k); return hzShort(2 ** r[0]) + "-" + hzShort(2 ** r[1]) + " Hz"; },
-        k => hz(0.1 * 250 ** k), k => k < 0.01 ? "OFF" : "±" + (2 * k * k).toFixed(1) + " oct", ten, lvl],
+    ring: {name: "Ring mod", sub: "MF-102 style", t1: 2, short: ["DRIVE", "FREQUENCY", "MIX", "LFO AMOUNT", "LFO RATE", "OUTPUT"],
+      t: [["RANGE", ["LO", "HI", "HI"]], ["LFO WAVE", ["SINE", "SQUARE", "TRIANGLE"]]],
+      fmt: [db21, (k, p) => { const r = p.t[0] === 0 ? [0.6, 80] : [30, 4000]; return hz(r[0] + (r[1] - r[0]) * k ** 3); }, ten, ten,
+        k => hz(0.1 + 24.9 * k ** 3), db21],
       blurb: "Multiplies your sound with a second tone: choppy tremolo, bells, clang and talking robots.",
-      tap: "Sets the LFO rate (knob 3)", led: "Blinks with the LFO",
-      ctl: [["Knob 1", "Carrier", "Pitch of the second tone. Low settings chop, high settings clang."],
-        ["Knob 2", "Range", "Left: 0.6-80 Hz, a choppy tremolo. Right: 30 Hz-4 kHz, bells and robots."],
-        ["Knob 3", "LFO rate", "Speed of a slow wobble on the carrier's pitch. Tap tempo overrides it."],
-        ["Knob 4", "LFO depth", "How far the wobble bends the carrier. Fully left is off."],
-        ["Knob 5", "Mix", "Dry (left) to all ring mod (right)."],
-        ["Knob 6", "Output", "Volume, 0 dB at noon, up to +6 dB fully right."],
-        ["Switch 2", "Not used", "Any position."],
-        ["Switch 3", "LFO shape", "Up sine, middle triangle, down square (jumps between two pitches)."]]},
+      tap: "Sets the LFO rate (knob 5)", led: "Blinks with the LFO",
+      ctl: [["Knob 1", "Drive", "Input level into the ring modulator. Above noon it adds grit. 0 dB at noon."],
+        ["Knob 2", "Frequency", "Pitch of the second tone (the carrier). Low settings chop, high settings clang."],
+        ["Knob 3", "Mix", "Dry (left) to all ring mod (right). The dry sound stays strong until past noon."],
+        ["Knob 4", "LFO amount", "How far the LFO bends the carrier's pitch, up to an octave either way. Fully left is off."],
+        ["Knob 5", "LFO rate", "Speed of the wobble, 0.1-25 Hz. Tap tempo overrides it."],
+        ["Knob 6", "Output", "Volume, 0 dB at noon."],
+        ["Switch 2", "Range", "Up Lo: 0.6-80 Hz, a choppy tremolo. Middle or down Hi: 30 Hz-4 kHz, bells and robots."],
+        ["Switch 3", "LFO waveform", "Up sine, middle square (jumps between two pitches), down triangle."]]},
   };
 
   // Levels were set on a bass line (and strummed chords for the Omnichord
@@ -77,10 +77,10 @@
     {id: "fixed-notch", fx: "phaser", name: "Fixed notch", for: "Bass, guitar", k: [0.55, 0.6, 0.65, 0, 0.5, 0.33], t: [2, 1], text: "No movement: a fixed nasal tone, like a wah pedal left half down.", tip: "Sweep picks the vowel."},
     {id: "tap-tempo-throb", fx: "phaser", name: "Tap-tempo throb", for: "Any", k: [0.5, 0.5, 0.6, 0.9, 0.6, 0.29], t: [0, 2], text: "A deep, hollow pulse locked to the song.", tip: "Tap the right footswitch on the beat; the sweep follows your taps."},
     {id: "audio-rate-grit", fx: "phaser", name: "Audio-rate grit", for: "Guitar, noise", k: [0.6, 0.5, 0.5, 0.5, 0.7, 0.26], t: [1, 0], text: "The sweep runs at audio rate: metallic, ring-mod-like overtones.", tip: "Turn the rate knob slowly for sci-fi effects."},
-    {id: "choppy-tremolo", fx: "ring", name: "Choppy tremolo", for: "Guitar, Omnichord", k: [0.47, 0, 0.3, 0, 0.6, 0.85], t: [1, 0], text: "A low carrier chops the sound into a stuttering tremolo.", tip: "Carrier sets the chop speed."},
-    {id: "metallic-bell", fx: "ring", name: "Metallic bell", for: "Omnichord, single notes", k: [0.55, 1, 0.3, 0, 0.7, 0.9], t: [1, 0], text: "Clangorous, bell-like overtones. Try slow single notes.", tip: "Every note gives a different chime: that is the charm."},
-    {id: "robot-wobble", fx: "ring", name: "Robot wobble", for: "Bass, voice", k: [0.45, 0.8, 0.35, 0.45, 1, 0.75], t: [1, 1], text: "A talking-robot tone with a slow wobble.", tip: "LFO depth to zero for a steady robot."},
-    {id: "two-note-warble", fx: "ring", name: "Two-note warble", for: "Guitar, effects", k: [0.5, 1, 0.45, 0.6, 0.8, 0.87], t: [1, 2], text: "The square LFO flips the carrier between two pitches: a sci-fi alarm.", tip: "Tap tempo locks the flips to the beat."},
+    {id: "choppy-tremolo", fx: "ring", name: "Choppy tremolo", for: "Guitar, Omnichord", k: [0.5, 0.408, 0.6, 0, 0.3, 0.48], t: [0, 0], text: "A low carrier chops the sound into a stuttering tremolo.", tip: "Frequency sets the chop speed."},
+    {id: "metallic-bell", fx: "ring", name: "Metallic bell", for: "Omnichord, single notes", k: [0.5, 0.47, 0.7, 0, 0.3, 0.51], t: [1, 0], text: "Clangorous, bell-like overtones. Try slow single notes.", tip: "Every note gives a different chime: that is the charm."},
+    {id: "robot-wobble", fx: "ring", name: "Robot wobble", for: "Bass, voice", k: [0.5, 0.287, 1, 0.32, 0.287, 0.49], t: [1, 0], text: "A talking-robot tone with a slow wobble.", tip: "LFO amount to zero for a steady robot."},
+    {id: "two-note-warble", fx: "ring", name: "Two-note warble", for: "Guitar, effects", k: [0.5, 0.43, 0.8, 0.65, 0.354, 0.52], t: [1, 1], text: "The square LFO flips the carrier between two pitches: a sci-fi alarm.", tip: "Tap tempo locks the flips to the beat."},
   ];
 
   // Words shared by the app and the README, per edition.
@@ -103,7 +103,7 @@
       ["Tap to sync.", "Two or more taps on the right footswitch set the phaser or ring mod speed. Turn the rate knob to take over again."],
       ["LEDs flashing, no sound? Replug.", "Holding the left footswitch for 2 seconds enters update mode. Unplug the power and plug it back in."],
       ["The knobs are the memory.", "Nothing is saved. Photograph a setting you like."],
-      ["The ring mod is experimental.", "That slot may get a different effect in a future update."]],
+      ["Lo range chops, Hi range rings.", "Below about 20 Hz the ring mod is a choppy tremolo; above, it makes new, clangy pitches."]],
     about: "FoogerBox firmware for the Cleveland Music Co. Hothouse. The filter and phaser are tuned against Moog's MF-101S and MF-103S plugins, and the figures on the preset cards read in those plugins' units. Inspired by the Moogerfooger MF-101, MF-102 and MF-103; not affiliated with Moog Music. Moog and Moogerfooger are trademarks of Moog Music Inc.",
   };
 
