@@ -1,12 +1,12 @@
 // FoogerBox guide data and panel drawings, shared by the guide app
 // (docs/index.html) and the README images (docs/build_images.js).
 // Knob values are positions 0..1; toggles are 0 up, 1 middle, 2 down.
-// Readouts use the Moog MF-101S / MF-103S plugins' own units.
+// Readouts use the Moog MF-101S / MF-103S / MF-102S plugins' own units.
 (function (root) {
-  // Which pedal this guide describes. "filter": the filter edition (the
-  // firmware's default build; switch 1 and the right footswitch unused).
-  // "full": filter, phaser and ring mod on switch 1 (make EDITION=full).
-  const EDITION = "filter";
+  // Which pedal this guide describes. "full": filter, phaser and ring mod on
+  // switch 1 (the firmware's default build). "filter": the filter edition
+  // (make EDITION=filter; switch 1 and the right footswitch unused).
+  const EDITION = "full";
   const SHOWN = EDITION === "full" ? ["filter", "phaser", "ring"] : ["filter"];
   const COL = {filter: "var(--filter)", phaser: "var(--phaser)", ring: "var(--ring)"};
   const DIAL = [20, 20.02, 20.71, 24.85, 39.01, 74.8, 150.12, 290.33, 529.27, 910.37, 1487.57, 2326.34, 3504.62, 5113.68, 7259.09, 10061.52, 13657.64];
@@ -104,7 +104,7 @@
       ["LEDs flashing, no sound? Replug.", "Holding the left footswitch for 2 seconds enters update mode. Unplug the power and plug it back in."],
       ["The knobs are the memory.", "Nothing is saved. Photograph a setting you like."],
       ["Lo range chops, Hi range rings.", "Below about 20 Hz the ring mod is a choppy tremolo; above, it makes new, clangy pitches."]],
-    about: "FoogerBox firmware for the Cleveland Music Co. Hothouse. The filter and phaser are tuned against Moog's MF-101S and MF-103S plugins, and the figures on the preset cards read in those plugins' units. Inspired by the Moogerfooger MF-101, MF-102 and MF-103; not affiliated with Moog Music. Moog and Moogerfooger are trademarks of Moog Music Inc.",
+    about: "FoogerBox firmware for the Cleveland Music Co. Hothouse. The filter, phaser and ring mod are tuned against Moog's MF-101S, MF-103S and MF-102S plugins, and the figures on the preset cards read in those plugins' units. Inspired by the Moogerfooger MF-101, MF-102 and MF-103; not affiliated with Moog Music. Moog and Moogerfooger are trademarks of Moog Music Inc.",
   };
 
   const TEXT_FILTER = {
